@@ -24,14 +24,14 @@
 
 ```mermaid
 flowchart TD
-    A[시작 - 서버 초기화] --> B[IOCP 핸들 생성<br>(CreateIoCompletionPort)]
+    A[시작 - 서버 초기화] --> B[IOCP 핸들 생성CreateIoCompletionPort]
     B --> C[IocpObject 소켓 등록]
     C -->|소켓 핸들 전달| D[IOCP와 연결]
     D --> E[비동기 I/O 요청 시작]
     E --> F[OS 커널에서 I/O 완료 이벤트 대기]
     F --> G[이벤트 완료 시<br>GetQueuedCompletionStatus 호출]
     G --> H[IocpEvent 추출]
-    H --> I[IocpObject::Dispatch() 호출]
+    H --> I[IocpObject::Dispatch 호출]
     I --> J[이벤트 처리 완료]
     J --> K[다음 이벤트 처리 또는 종료]
 ```
@@ -44,7 +44,7 @@ flowchart TD
 flowchart TD
     A[GetQueuedCompletionStatus 실패] --> B{에러 코드 확인}
     B -->|WAIT_TIMEOUT| C[타임아웃 - 아무 작업 없음]
-    B -->|기타 에러| D[IocpObject::Dispatch()로 에러 처리 위임]
+    B -->|기타 에러| D[IocpObject::Dispatch로 에러 처리 위임]
 ```
 
 ---
